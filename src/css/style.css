@@ -17,9 +17,9 @@
   --shadow-sm: 0 1px 2px rgba(29, 32, 39, 0.05), 0 2px 8px rgba(29, 32, 39, 0.05);
   --shadow-md: 0 2px 6px rgba(29, 32, 39, 0.06), 0 10px 28px rgba(29, 32, 39, 0.09);
   --radius: 14px;
-  --font-serif: "Times New Roman", "Liberation Serif", Times, Georgia, serif;
-  --font-sans: "Times New Roman", "Liberation Serif", Times, Georgia,
-    "SimSun", "Songti SC", serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
   --nav-h: 64px;
 }
 
@@ -29,13 +29,14 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  font-size: 19px;
 }
 
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.68;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink);
   background-color: var(--bg);
   /* faint paper texture: dotted grid over a soft warm gradient */
@@ -56,7 +57,7 @@ a:hover { color: var(--accent-deep); }
 ::selection { background: rgba(179, 40, 45, 0.18); }
 
 .container {
-  width: min(1080px, 92%);
+  width: min(1460px, 96%);
   margin-inline: auto;
 }
 
@@ -218,24 +219,149 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ==========================================================================
-   Sections
+   Two-column layout: sticky sidebar + content
    ========================================================================== */
-.section { padding: 36px 0 6px; }
+.layout {
+  width: min(1460px, 96%);
+  margin-inline: auto;
+  padding-top: calc(var(--nav-h) + 36px);
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky;
+  top: calc(var(--nav-h) + 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 192px;
+  aspect-ratio: 1 / 1;
+}
+
+/* name fixed under the avatar */
+.side-name {
+  margin: 22px 0 0;
+  font-size: 1.42rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+.side-name-cn {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.32em;
+  text-indent: 0.32em; /* balance the trailing letter-space */
+}
+
+/* conic-gradient disc peeking out as a colorful ring */
+.avatar-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 210deg,
+    var(--accent) 0deg,
+    #e2a13c 120deg,
+    var(--accent) 240deg,
+    var(--accent) 360deg
+  );
+  box-shadow: var(--shadow-md);
+}
+
+/* slowly rotating dashed orbit */
+.avatar-ring-dash {
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  border: 2px dashed rgba(179, 40, 45, 0.38);
+  animation: avatar-spin 48s linear infinite;
+}
+
+@keyframes avatar-spin { to { transform: rotate(360deg); } }
+
+.avatar {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  background: #ece9e2;
+  box-shadow: var(--shadow-md);
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+/* basic info rows under the avatar */
+.side-info {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 16px 2px 0;
+  border-top: 1px solid var(--line);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.side-info li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.side-info svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--accent);
+  flex: none;
+  margin-top: 3px;
+}
+.side-info a { color: var(--ink-soft); }
+.side-info a:hover { color: var(--accent); }
+
+.side-links {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.side-links a {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.side-links a:hover { color: var(--accent); }
+.side-links span { margin: 0 6px; }
+
+/* ==========================================================================
+   Content column
+   ========================================================================== */
+.content { min-width: 0; }
+
+.section { padding: 30px 0 8px; }
+.section:first-child { padding-top: 6px; }
 
 .section-head { margin-bottom: 14px; }
 
 .section-title {
-  font-size: clamp(1.6rem, 2.8vw, 2.05rem);
+  font-size: clamp(1.5rem, 2.6vw, 1.95rem);
   font-weight: 700;
   color: var(--ink);
-}
-
-/* ---------- Flat entries (no card boxes, jimntu-style lists) ---------- */
-.card {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 /* ---------- Shared bits ---------- */
@@ -248,18 +374,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-
-.rank-chip {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -291,78 +405,28 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 .bullet-list strong { color: var(--ink); }
 
 /* ==========================================================================
-   About / Hero
+   About (no boxes)
    ========================================================================== */
-.about { padding-top: calc(var(--nav-h) + 44px); }
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 44px;
-  align-items: center;
-}
-
-.hero-name {
-  font-size: clamp(2.2rem, 4.8vw, 3.3rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.hero-nick {
-  font-size: 0.62em;
-  font-weight: 600;
-  color: var(--accent);
-}
-
-.hero-name-cn {
-  display: inline-block;
-  margin-left: 10px;
-  vertical-align: 6px;
-  font-family: var(--font-sans);
-  font-size: 0.42em;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.28em;
-}
-
 .hero-role {
-  margin: 14px 0 20px;
-  font-size: 1.08rem;
+  margin: 0 0 16px;
+  font-size: 1.12rem;
   font-weight: 600;
   color: var(--ink-soft);
 }
 .dot-sep { margin: 0 8px; color: var(--accent); }
 
 .hero-bio {
-  margin: 0 0 14px;
-  max-width: 60ch;
+  margin: 0 0 12px;
+  max-width: none;
+  font-size: 1.08rem;
   color: var(--ink-soft);
-}
-
-.interest-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  margin: 20px 0 28px;
-  padding: 0;
-}
-.interest-chips li {
-  padding: 6px 13px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--ink-soft);
-  font-size: 0.8rem;
-  font-weight: 500;
-  box-shadow: var(--shadow-sm);
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .btn {
@@ -402,106 +466,288 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   border-color: rgba(179, 40, 45, 0.4);
 }
 
-/* Photo — circular avatar with decorative rings */
-.hero-photo {
-  position: relative;
-  justify-self: center;
+/* ==========================================================================
+   Education — flat rows with logos
+   ========================================================================== */
+.edu-list { display: grid; }
+
+.edu-list > * {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0 12px;
+}
+.edu-list > :last-child { border-bottom: none; }
+
+.edu-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 18px;
+  align-items: flex-start;
 }
 
-.avatar-wrap {
-  position: relative;
-  width: min(232px, 62vw);
-  aspect-ratio: 1 / 1;
-}
-
-/* conic-gradient disc peeking out as a colorful ring */
-.avatar-ring {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 210deg,
-    var(--accent) 0deg,
-    #e2a13c 120deg,
-    var(--accent) 240deg,
-    var(--accent) 360deg
-  );
-  box-shadow: var(--shadow-md);
-}
-
-/* slowly rotating dashed orbit */
-.avatar-ring-dash {
-  position: absolute;
-  inset: -26px;
-  border-radius: 50%;
-  border: 2px dashed rgba(179, 40, 45, 0.38);
-  animation: avatar-spin 48s linear infinite;
-}
-
-@keyframes avatar-spin { to { transform: rotate(360deg); } }
-
-.avatar {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 6px solid #ffffff;
-  background: #ece9e2;
-  box-shadow: var(--shadow-md);
-}
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 30%;
-}
-
-/* floating graduation badge */
-.avatar-badge {
-  position: absolute;
-  right: 2%;
-  bottom: 6%;
+.logo-badge {
+  flex: none;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  padding: 2px;
+}
+.logo-badge img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.edu-main { flex: 1; min-width: 0; }
+
+.edu-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.edu-school { font-size: 1.1rem; font-weight: 700; }
+.edu-degree {
+  margin: 4px 0 0;
+  color: var(--accent-deep);
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+.edu-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.edu-note { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+.edu-main .bullet-list { margin-top: 8px; }
+
+/* ==========================================================================
+   Publications — one big frame containing papers + patents
+   ========================================================================== */
+.pub-frame {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 2px 22px;
+}
+
+.pub-row {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 26px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.pub-row:last-of-type { border-bottom-color: var(--line); }
+
+/* figure tile at the front of a boxed module — keeps original aspect ratio */
+.mod-figure {
+  display: grid;
+  place-items: center;
   background: #ffffff;
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-md);
-  font-size: 1.5rem;
+  border-radius: 10px;
+  padding: 10px;
+  overflow: hidden;
+}
+.mod-figure img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+/* company logos: smaller tile, centered */
+.mod-figure-co { padding: 14px 10px; }
+.mod-figure-co img {
+  width: auto;
+  max-height: 92px;
 }
 
-/* Extra blocks (honors / languages / beyond) — flat columns */
-.about-extra {
-  display: grid;
-  grid-template-columns: 1.25fr 1fr 1.15fr;
-  gap: 22px;
-  margin-top: 4px;
-}
-.about-extra > * + * {
-  /* border-left: 1px solid var(--line); */
-  padding-left: 22px;
+/* slightly smaller figure (e.g., MA-LSTM), still keeps aspect ratio */
+.mod-figure-sm img {
+  max-width: 225px;
+  margin-inline: auto;
 }
 
-.awards-card,
-.beyond-card,
-.patents-block {
-  padding: 0;
+.pub-title { font-size: 1.06rem; font-weight: 700; line-height: 1.35; }
+.pub-title a { color: var(--ink); }
+.pub-title a:hover { color: var(--accent); }
+
+.pub-authors {
+  margin: 7px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+.pub-authors .me {
+  font-weight: 700;
+  color: var(--ink);
 }
 
-.subcard-title {
+.pub-venue {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 10px;
-  font-size: 1.05rem;
+  margin: 8px 0 0;
+}
+.venue-chip {
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.pub-btn {
+  padding: 6px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.pub-btn:hover {
+  background: var(--ink-soft);
+  border-color: var(--ink-soft);
+  color: #fff;
+}
+
+/* patents share the publications frame */
+.frame-patents { padding: 16px 0 18px; }
+.subcard-title {
+  margin-bottom: 8px;
+  font-size: 1.02rem;
   font-weight: 700;
 }
-.t-emoji { font-size: 1.15rem; line-height: 1; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+.patent-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.patent-list li { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.patent-list li:last-child { border-bottom: 0; }
+.patent-title { margin: 0; font-weight: 600; font-size: 0.94rem; color: var(--ink); }
+.patent-meta { margin: 3px 0 0; color: var(--muted); font-size: 0.82rem; }
+
+/* ==========================================================================
+   Research — flat rows
+   ========================================================================== */
+.exp-list { display: grid; }
+
+.exp-list > * {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0 14px;
+}
+.exp-list > :last-child { border-bottom: none; }
+
+.exp-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.exp-logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #274b7a;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.exp-id { flex: 1; min-width: 240px; }
+.exp-org {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.exp-loc {
+  margin-left: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.exp-role { margin: 4px 0 0; color: var(--accent-deep); font-size: 0.9rem; font-weight: 600; }
+
+.exp-card .bullet-list { margin-top: 10px; }
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+.tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Intern — boxed modules with company image at the front
+   ========================================================================== */
+.intern-list {
+  display: grid;
+  gap: 14px;
+}
+
+.exp-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+.exp-box .bullet-list { margin-top: 8px; }
+
+/* ==========================================================================
+   More — flat, sequential blocks
+   ========================================================================== */
+.more-block + .more-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.more-sub {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
 
 .awards-list {
   margin: 0;
@@ -527,284 +773,30 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   letter-spacing: 0.03em;
 }
 
-.beyond-card p {
-  margin: 0 0 12px;
+.more-block p {
+  margin: 0 0 10px;
   color: var(--ink-soft);
   font-size: 0.94rem;
-}
-.skills-label {
-  margin: 0 0 6px;
-  color: var(--muted);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.interest-chips.compact {
-  margin: 0 0 16px;
-}
-.interest-chips.compact li {
-  padding: 5px 11px;
-  font-size: 0.78rem;
-}
-
-/* ==========================================================================
-   Education — rows with logos
-   ========================================================================== */
-.edu-list { display: grid; }
-
-/* flat rows separated by hairlines */
-.edu-list > *,
-.pub-list > *,
-.exp-list > * {
-  border-bottom: 1px solid var(--line);
-  padding: 10px 0 12px;
-}
-.edu-list > :last-child,
-.pub-list > :last-child,
-.exp-list > :last-child {
-  border-bottom: none;
-}
-
-.edu-row {
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-}
-
-/* plain logo container (no box) */
-.logo-badge {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  padding: 2px;
-}
-.logo-badge img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.edu-main { flex: 1; min-width: 0; }
-
-.edu-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.edu-school { font-size: 1.12rem; font-weight: 700; }
-.edu-degree {
-  margin: 5px 0 0;
-  color: var(--accent-deep);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-.edu-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-}
-.edu-note { margin: 8px 0 0; color: var(--muted); font-size: 0.92rem; }
-.edu-main .bullet-list { margin-top: 8px; }
-
-/* ==========================================================================
-   Publications
-   ========================================================================== */
-.pub-list {
-  display: grid;
-  gap: 14px;
-}
-
-.pub-item {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 6px;
-}
-
-.pub-number {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--accent);
-  padding-top: 3px;
-}
-
-.pub-title { font-size: 1.08rem; font-weight: 700; line-height: 1.35; }
-.pub-title a { color: var(--ink); }
-.pub-title a:hover { color: var(--accent); }
-
-.pub-authors {
-  margin: 8px 0 0;
-  color: var(--ink-soft);
-  font-size: 0.94rem;
-}
-.pub-authors .me {
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.pub-venue {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 10px 0 0;
-}
-.venue-chip {
-  padding: 4px 11px;
-  border-radius: 6px;
-  background: var(--accent-soft);
-  color: var(--accent-deep);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.venue-chip.venue-conf { background: rgba(31, 63, 104, 0.09); color: #274b7a; }
-.pub-meta { color: var(--muted); font-size: 0.85rem; }
-
-.pub-abstract {
-  margin: 8px 0 0;
-  color: var(--ink-soft);
-  font-size: 0.93rem;
-  max-width: 74ch;
-}
-
-.pub-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-.pub-btn {
-  padding: 6px 15px;
-  border-radius: 8px;
-  border: 1px solid rgba(179, 40, 45, 0.35);
-  color: var(--accent-deep);
-  font-size: 0.82rem;
-  font-weight: 600;
-  transition: background 0.18s ease, color 0.18s ease;
-}
-.pub-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-/* Patents */
-.patents-block {
-  margin-top: 10px;
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
-}
-.patent-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.patent-list li { padding: 12px 0; border-bottom: 1px dashed var(--line); }
-.patent-list li:last-child { border-bottom: 0; }
-.patent-title { margin: 0; font-weight: 600; font-size: 0.96rem; color: var(--ink); }
-.patent-meta { margin: 4px 0 0; color: var(--muted); font-size: 0.82rem; }
-
-/* ==========================================================================
-   Intern & Research cards
-   ========================================================================== */
-.exp-list { display: grid; }
-
-.exp-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.exp-logo {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.exp-logo-alt { background: #274b7a; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.22), var(--shadow-sm); }
-
-.exp-id { flex: 1; min-width: 240px; }
-.exp-org {
-  font-size: 1.12rem;
-  font-weight: 700;
-}
-.exp-loc {
-  margin-left: 8px;
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
-.exp-role { margin: 5px 0 0; color: var(--accent-deep); font-size: 0.9rem; font-weight: 600; }
-
-.exp-card .bullet-list { margin-top: 10px; }
-
-.tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  margin: 10px 0 0;
-  padding: 0;
-}
-.tag {
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  max-width: 78ch;
 }
 
 /* ==========================================================================
    Footer
    ========================================================================== */
 .site-footer {
-  margin-top: 40px;
+  margin-top: 48px;
   border-top: 1px solid var(--line);
   background: #f1efe9;
 }
 
 .footer-inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 24px 0 8px;
+  padding: 20px 0 6px;
 }
-
-.footer-name {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-.footer-name span {
-  margin-left: 8px;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.2em;
-}
-.footer-note { margin: 4px 0 0; color: var(--muted); font-size: 0.85rem; }
 
 .footer-links {
   display: flex;
@@ -820,7 +812,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 }
 .footer-links a:hover { color: var(--accent); }
 
-.footer-bottom { padding: 14px 0 26px; }
+.footer-bottom { padding: 10px 0 24px; }
 .footer-bottom p {
   margin: 0;
   color: var(--muted);
@@ -868,25 +860,42 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .card, .btn, .back-to-top { transition: none; }
+  .btn, .back-to-top { transition: none; }
   .avatar-ring-dash { animation: none; }
 }
 
 /* ==========================================================================
    Responsive
    ========================================================================== */
-@media (max-width: 1080px) {
-  .about-extra { grid-template-columns: 1fr 1fr; }
-  .awards-card { grid-column: 1 / -1; }
-  .about-extra > * { border-left: none; padding-left: 0; }
-}
+@media (max-width: 1020px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 
-@media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  .hero-text { order: 1; }
-  .hero-photo { order: 2; }
-  .about-extra { grid-template-columns: 1fr; }
-  .awards-card { grid-column: auto; }
+  /* sidebar becomes a horizontal intro strip */
+  .sidebar {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 26px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .avatar-wrap { width: 120px; flex: none; }
+  .avatar { border-width: 4px; }
+
+  .side-name { margin: 0; text-align: left; }
+  .side-name-cn { display: inline; margin-left: 8px; text-indent: 0; }
+
+  .side-info {
+    flex: 1;
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+    max-width: 420px;
+  }
+  .side-links { margin-top: 10px; }
 }
 
 @media (max-width: 760px) {
@@ -918,19 +927,21 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   .nav-link::after { display: none; }
   .nav-link.active { background: var(--accent-soft); }
 
-  .section { padding: 30px 0 8px; }
+  .section { padding: 24px 0 6px; }
 
-  .pub-item { grid-template-columns: 1fr; padding: 22px 24px; }
-  .pub-number { padding: 0; }
-  .exp-card { padding: 22px 22px; }
-  .exp-head { align-items: flex-start; }
+  /* sidebar stacks vertically again */
+  .sidebar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .side-info { max-width: none; }
+
+  .pub-row { grid-template-columns: 1fr; gap: 12px; }
+
+  .exp-box { grid-template-columns: 1fr; gap: 12px; }
   .exp-id { min-width: 100%; }
   .edu-meta { justify-content: flex-start; }
-}
-
-@media (max-width: 460px) {
-  .edu-row { padding: 20px 20px; gap: 14px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 
 /* ==========================================================================
@@ -939,7 +950,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 @media print {
   .site-nav, .progress-bar, .back-to-top, .hero-actions, .skip-link { display: none; }
   body { background: #fff; }
-  .section { padding: 24px 0; }
-  .card { box-shadow: none; break-inside: avoid; }
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .section { padding: 18px 0; }
+  .pub-frame, .exp-box { box-shadow: none; break-inside: avoid; }
   .reveal { opacity: 1; transform: none; }
 }

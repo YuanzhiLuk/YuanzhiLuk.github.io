@@ -220,9 +220,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    Sections
    ========================================================================== */
-.section { padding: 92px 0 40px; }
+.section { padding: 56px 0 20px; }
 
-.section-head { margin-bottom: 40px; }
+.section-head { margin-bottom: 24px; }
 
 .section-kicker {
   margin: 0 0 6px;
@@ -234,7 +234,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 }
 
 .section-title {
-  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+  font-size: clamp(1.7rem, 3vw, 2.15rem);
   font-weight: 700;
   color: var(--ink);
 }
@@ -243,7 +243,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   display: block;
   width: 56px;
   height: 4px;
-  margin-top: 14px;
+  margin-top: 10px;
   border-radius: 2px;
   background: linear-gradient(90deg, var(--accent) 0 70%, var(--line) 70% 100%);
 }
@@ -294,7 +294,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 .bullet-list li {
   position: relative;
   padding-left: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: var(--ink-soft);
   font-size: 0.95rem;
 }
@@ -316,12 +316,12 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    About / Hero
    ========================================================================== */
-.about { padding-top: calc(var(--nav-h) + 68px); }
+.about { padding-top: calc(var(--nav-h) + 44px); }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 56px;
+  gap: 44px;
   align-items: center;
 }
 
@@ -509,15 +509,15 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 .awards-card,
 .beyond-card,
 .patents-block {
-  padding: 26px 28px;
+  padding: 16px 20px;
 }
 
 .subcard-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
-  font-size: 1.12rem;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
   font-weight: 700;
 }
 .t-emoji { font-size: 1.15rem; line-height: 1; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
@@ -531,7 +531,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   display: flex;
   gap: 14px;
   align-items: baseline;
-  padding: 10px 0;
+  padding: 7px 0;
   border-bottom: 1px dashed var(--line);
   color: var(--ink-soft);
   font-size: 0.92rem;
@@ -570,13 +570,13 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    Education — rows with logos
    ========================================================================== */
-.edu-list { display: grid; gap: 20px; }
+.edu-list { display: grid; gap: 14px; }
 
 .edu-row {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   align-items: flex-start;
-  padding: 24px 26px;
+  padding: 14px 18px;
 }
 
 /* white rounded badge holding a university / company logo */
@@ -584,9 +584,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   flex: none;
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  padding: 8px;
+  width: 48px;
+  height: 48px;
+  padding: 7px;
   border-radius: 14px;
   background: #ffffff;
   border: 1px solid var(--line);
@@ -608,7 +608,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   flex-wrap: wrap;
 }
 
-.edu-school { font-size: 1.22rem; font-weight: 700; }
+.edu-school { font-size: 1.12rem; font-weight: 700; }
 .edu-degree {
   margin: 5px 0 0;
   color: var(--accent-deep);
@@ -621,22 +621,22 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   gap: 8px;
   justify-content: flex-end;
 }
-.edu-note { margin: 10px 0 0; color: var(--muted); font-size: 0.92rem; }
-.edu-main .bullet-list { margin-top: 12px; }
+.edu-note { margin: 8px 0 0; color: var(--muted); font-size: 0.92rem; }
+.edu-main .bullet-list { margin-top: 8px; }
 
 /* ==========================================================================
    Publications
    ========================================================================== */
 .pub-list {
   display: grid;
-  gap: 22px;
+  gap: 14px;
 }
 
 .pub-item {
   display: grid;
-  grid-template-columns: 52px 1fr;
+  grid-template-columns: 48px 1fr;
   gap: 6px;
-  padding: 26px 28px;
+  padding: 16px 20px;
 }
 
 .pub-number {
@@ -647,7 +647,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   padding-top: 3px;
 }
 
-.pub-title { font-size: 1.18rem; font-weight: 700; line-height: 1.35; }
+.pub-title { font-size: 1.08rem; font-weight: 700; line-height: 1.35; }
 .pub-title a { color: var(--ink); }
 .pub-title a:hover { color: var(--accent); }
 
@@ -682,7 +682,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 .pub-meta { color: var(--muted); font-size: 0.85rem; }
 
 .pub-abstract {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: var(--ink-soft);
   font-size: 0.93rem;
   max-width: 74ch;
@@ -692,7 +692,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 10px;
 }
 .pub-btn {
   padding: 6px 15px;
@@ -707,7 +707,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 /* Patents */
 .patents-block {
-  margin-top: 26px;
+  margin-top: 16px;
   background: linear-gradient(180deg, #fdfcf9, #faf8f3);
 }
 .patent-list {
@@ -723,9 +723,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    Intern & Research cards
    ========================================================================== */
-.exp-list { display: grid; gap: 24px; }
+.exp-list { display: grid; gap: 14px; }
 
-.exp-card { padding: 28px 30px; }
+.exp-card { padding: 16px 20px; }
 
 .exp-head {
   display: flex;
@@ -752,7 +752,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 .exp-id { flex: 1; min-width: 240px; }
 .exp-org {
-  font-size: 1.22rem;
+  font-size: 1.12rem;
   font-weight: 700;
 }
 .exp-loc {
@@ -765,14 +765,14 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 }
 .exp-role { margin: 5px 0 0; color: var(--accent-deep); font-size: 0.9rem; font-weight: 600; }
 
-.exp-card .bullet-list { margin-top: 18px; }
+.exp-card .bullet-list { margin-top: 10px; }
 
 .tag-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   list-style: none;
-  margin: 16px 0 0;
+  margin: 10px 0 0;
   padding: 0;
 }
 .tag {
@@ -790,7 +790,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
    Footer
    ========================================================================== */
 .site-footer {
-  margin-top: 90px;
+  margin-top: 56px;
   border-top: 1px solid var(--line);
   background: #f1efe9;
 }
@@ -801,7 +801,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 34px 0 10px;
+  padding: 24px 0 8px;
 }
 
 .footer-name {
@@ -931,7 +931,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   .nav-link::after { display: none; }
   .nav-link.active { background: var(--accent-soft); }
 
-  .section { padding: 70px 0 28px; }
+  .section { padding: 44px 0 16px; }
 
   .pub-item { grid-template-columns: 1fr; padding: 22px 24px; }
   .pub-number { padding: 0; }

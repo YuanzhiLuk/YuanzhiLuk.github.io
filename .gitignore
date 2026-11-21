@@ -1,0 +1,9 @@
+# Source materials — kept locally, not for deployment
+/head.jpg
+/*.pdf
+/src/assets/*.pdf
+/src/*.md
+
+# OS / editor
+Thumbs.db
+.DS_Store

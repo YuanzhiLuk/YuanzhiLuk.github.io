@@ -29,7 +29,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 body {
@@ -226,8 +226,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   margin-inline: auto;
   padding-top: calc(var(--nav-h) + 36px);
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 48px;
+  /* fluid sidebar: shrinks with the window instead of collapsing early */
+  grid-template-columns: clamp(168px, 16vw, 230px) minmax(0, 1fr);
+  gap: clamp(26px, 3.2vw, 48px);
   align-items: start;
 }
 
@@ -242,14 +243,15 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 .avatar-wrap {
   position: relative;
-  width: 192px;
+  width: 100%;
+  max-width: 160px;
   aspect-ratio: 1 / 1;
 }
 
 /* name fixed under the avatar */
 .side-name {
-  margin: 22px 0 0;
-  font-size: 1.42rem;
+  margin: 20px 0 0;
+  font-size: clamp(1.12rem, 1.4vw, 1.3rem);
   font-weight: 700;
   text-align: center;
   letter-spacing: -0.01em;
@@ -536,7 +538,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 .pub-row {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: clamp(185px, 24vw, 300px) minmax(0, 1fr);
   gap: 26px;
   padding: 20px 0;
   border-bottom: 1px solid var(--line);
@@ -568,7 +570,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 /* slightly smaller figure (e.g., MA-LSTM), still keeps aspect ratio */
 .mod-figure-sm img {
-  max-width: 225px;
+  max-width: clamp(150px, 19vw, 215px);
   margin-inline: auto;
 }
 
@@ -728,7 +730,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   box-shadow: var(--shadow-sm);
   padding: 16px 20px;
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-columns: clamp(110px, 12vw, 150px) minmax(0, 1fr);
   gap: 20px;
   align-items: center;
 }
@@ -867,7 +869,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    Responsive
    ========================================================================== */
-@media (max-width: 860px) {
+@media (max-width: 760px) {
   .layout {
     grid-template-columns: 1fr;
     gap: 0;

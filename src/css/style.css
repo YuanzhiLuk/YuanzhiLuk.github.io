@@ -867,7 +867,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
 /* ==========================================================================
    Responsive
    ========================================================================== */
-@media (max-width: 1020px) {
+@media (max-width: 860px) {
   .layout {
     grid-template-columns: 1fr;
     gap: 0;
@@ -938,6 +938,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   .side-info { max-width: none; }
 
   .pub-row { grid-template-columns: 1fr; gap: 12px; }
+  /* cap figures when full-width so images never get huge */
+  .pub-row .mod-figure { max-width: 430px; margin-inline: auto; }
+  .exp-box .mod-figure { max-width: 260px; margin-inline: auto; }
 
   .exp-box { grid-template-columns: 1fr; gap: 12px; }
   .exp-id { min-width: 100%; }

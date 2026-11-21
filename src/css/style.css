@@ -483,7 +483,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 18px); }
   margin-top: 4px;
 }
 .about-extra > * + * {
-  border-left: 1px solid var(--line);
+  /* border-left: 1px solid var(--line); */
   padding-left: 22px;
 }
 
